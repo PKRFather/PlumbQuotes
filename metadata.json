@@ -1,0 +1,6 @@
+{
+  "name": "PlumbQuote & Bill - Plumbing Quotation & Invoice Android App",
+  "description": "Offline-first plumbing quotation and bill generator for Android. Upload custom letterheads and formats, access built-in plumbing item glossary, calculate GST and discounts, and export or share professional PDFs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

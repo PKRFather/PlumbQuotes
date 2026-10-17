@@ -1,0 +1,684 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pipe Fittings, Valves, and Joints Glossary Configuration",
+  "description": "Standard technical and field glossary configuration for plumbing pipe fittings, valves, and pipe joints based on vocational plumbing standards (NCERT / Indian Plumbing Skills Council).",
+  "version": "1.0.0",
+  "lastUpdated": "2026-10-17",
+  "categories": [
+    {
+      "id": "pipe_fittings",
+      "name": "Pipe Fittings",
+      "description": "Fixtures and components fixed in the plumbing system to join straight pipes or tube sections, change flow direction, distribute supply, or adapt pipe diameters.",
+      "items": [
+        {
+          "code": "FIT-COL-001",
+          "name": "Pipe Collar",
+          "category": "Fittings",
+          "subcategory": "Couplings & Collars",
+          "function": "Used while joining two pipes of the same length, fitted into the end of the pipe.",
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.25\"", "1.5\"", "2\"", "110mm"],
+          "materials": ["PVC", "CPVC", "GI", "Cast Iron"],
+          "unit": "Nos",
+          "defaultRatePaise": 2800,
+          "taxRate": 18,
+          "notes": "Ensures leak-proof axial alignment between consecutive pipe lengths."
+        },
+        {
+          "code": "FIT-ELB-90",
+          "name": "90° Elbow (Long Radius / Short Radius)",
+          "category": "Fittings",
+          "subcategory": "Bends & Elbows",
+          "function": "Installed at the time of joining two pipes when a 90° change in flow direction is required.",
+          "specifications": {
+            "longRadius": "Radius is 1.5 times the pipe diameter (LR Elbow)",
+            "shortRadius": "Radius is 1.0 times the pipe diameter (SR Elbow)"
+          },
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.25\"", "1.5\"", "2\"", "3\"", "4\""],
+          "materials": ["CPVC SDR 11", "PVC", "Brass", "GI Class B", "Copper"],
+          "unit": "Nos",
+          "defaultRatePaise": 3800,
+          "taxRate": 18,
+          "notes": "Reduces friction loss in Long Radius; Short Radius suited for tight wall chases."
+        },
+        {
+          "code": "FIT-ELB-45",
+          "name": "45° Elbow / Bend",
+          "category": "Fittings",
+          "subcategory": "Bends & Elbows",
+          "function": "Used when a gradual 45° directional offset or deflection is required in the pipeline.",
+          "standardSizes": ["3/4\"", "1\"", "1.25\"", "1.5\"", "2\"", "75mm", "110mm"],
+          "materials": ["CPVC", "PVC SWR", "GI", "HDPE"],
+          "unit": "Nos",
+          "defaultRatePaise": 3400,
+          "taxRate": 18,
+          "notes": "Prevents turbulence and hydraulic hammer compared to sharp 90-degree turns."
+        },
+        {
+          "code": "FIT-ELB-RED",
+          "name": "Reducing Elbow (Reducer Type Elbow)",
+          "category": "Fittings",
+          "subcategory": "Bends & Elbows",
+          "function": "Simultaneously changes flow direction by 90° while reducing line size between differing diameters.",
+          "standardSizes": ["3/4\" x 1/2\"", "1\" x 3/4\"", "1.25\" x 1\"", "1.5\" x 1.25\""],
+          "materials": ["CPVC", "PVC", "GI"],
+          "unit": "Nos",
+          "defaultRatePaise": 5200,
+          "taxRate": 18,
+          "notes": "Eliminates need for separate straight reducer plus standard elbow."
+        },
+        {
+          "code": "FIT-TEE-EQ",
+          "name": "Equal Tee",
+          "category": "Fittings",
+          "subcategory": "Tees & Branches",
+          "function": "T-shaped fitting with a side outlet at 90° to the run of the pipe; all three ports are of equal diameter.",
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.25\"", "1.5\"", "2\""],
+          "materials": ["CPVC", "PVC", "Brass", "GI Class B", "PPR"],
+          "unit": "Nos",
+          "defaultRatePaise": 4400,
+          "taxRate": 18,
+          "notes": "Distributes supply from the main header line to fixture branch lines."
+        },
+        {
+          "code": "FIT-TEE-RED",
+          "name": "Reducing Tee",
+          "category": "Fittings",
+          "subcategory": "Tees & Branches",
+          "function": "T-shaped fitting where the branch outlet (or run) has a reduced diameter compared to the main inlet.",
+          "standardSizes": ["3/4\" x 1/2\"", "1\" x 3/4\"", "1\" x 1/2\"", "1.25\" x 3/4\"", "1.5\" x 1\""],
+          "materials": ["CPVC", "PVC", "GI"],
+          "unit": "Nos",
+          "defaultRatePaise": 6500,
+          "taxRate": 18,
+          "notes": "Maintains mainline hydraulic pressure while branching to small plumbing fixtures."
+        },
+        {
+          "code": "FIT-TEE-YT",
+          "name": "Y-T Joint / Single Tee Socket with Cleanout",
+          "category": "Fittings",
+          "subcategory": "Tees & Branches",
+          "function": "Combines a 45° wye entry with a sanitary sweep tee, including removable cleanout access cover.",
+          "standardSizes": ["75mm (3\")", "110mm (4\")", "160mm (6\")"],
+          "materials": ["PVC SWR (Self-fit / Ring-fit)"],
+          "unit": "Nos",
+          "defaultRatePaise": 16500,
+          "taxRate": 18,
+          "notes": "Essential for building drainage and soil waste stacks to permit clearing blockages."
+        },
+        {
+          "code": "FIT-TEE-DBL",
+          "name": "Double Y-T Joint / Sanitary Cross Tee",
+          "category": "Fittings",
+          "subcategory": "Tees & Branches",
+          "function": "Dual branch junction allowing two opposing side lines to feed into a single vertical drainage stack.",
+          "standardSizes": ["75mm", "110mm"],
+          "materials": ["PVC SWR", "CI (Cast Iron)"],
+          "unit": "Nos",
+          "defaultRatePaise": 24000,
+          "taxRate": 18,
+          "notes": "Used in back-to-back bathroom drainage layouts."
+        },
+        {
+          "code": "FIT-RED-SOC",
+          "name": "Reducer Socket / Concentric Reducer",
+          "category": "Fittings",
+          "subcategory": "Reducers",
+          "function": "Connects two inline pipes of differing diameters in a straight run.",
+          "standardSizes": ["3/4\" x 1/2\"", "1\" x 3/4\"", "1.25\" x 1\"", "1.5\" x 1.25\"", "2\" x 1.5\""],
+          "materials": ["CPVC", "PVC", "Copper", "GI"],
+          "unit": "Nos",
+          "defaultRatePaise": 3200,
+          "taxRate": 18,
+          "notes": "Smooth tapered internal transition prevents flow separation and sediment entrapment."
+        },
+        {
+          "code": "FIT-NIP-HEX",
+          "name": "Hex Nipple / Barrel Nipple",
+          "category": "Fittings",
+          "subcategory": "Nipples & Adaptors",
+          "function": "A short piece of pipe having external threads at both ends, used for short extension or linking two female fittings.",
+          "standardSizes": ["1/2\" x 2\"", "1/2\" x 3\"", "3/4\" x 2\"", "3/4\" x 3\"", "1\" x 2\""],
+          "materials": ["Brass Chrome Plated", "GI", "Stainless Steel", "CPVC"],
+          "unit": "Nos",
+          "defaultRatePaise": 8500,
+          "taxRate": 18,
+          "notes": "Ideal for mounting wall taps, mixers, and angle cocks to concealed wall elbows."
+        },
+        {
+          "code": "FIT-UNI-3PC",
+          "name": "Three-Piece Union",
+          "category": "Fittings",
+          "subcategory": "Unions",
+          "function": "Fitting made of three components: nut, male threaded end, and female end. Allows quick disconnection without cutting pipes.",
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.25\"", "1.5\"", "2\""],
+          "materials": ["CPVC with Brass insert", "GI", "Brass", "PPR"],
+          "unit": "Nos",
+          "defaultRatePaise": 18500,
+          "taxRate": 18,
+          "notes": "Mandatory before and after pumps, water meters, and overhead tanks for easy maintenance."
+        },
+        {
+          "code": "FIT-CRS-001",
+          "name": "Four-Way Cross",
+          "category": "Fittings",
+          "subcategory": "Crosses",
+          "function": "Four-way junction with three outlets and one inlet joining four pipes intersecting at 90°.",
+          "standardSizes": ["3/4\"", "1\"", "1.5\"", "2\""],
+          "materials": ["GI", "PVC", "Brass"],
+          "unit": "Nos",
+          "defaultRatePaise": 14500,
+          "taxRate": 18,
+          "notes": "Subject to thermal stress at center node; ensure adequate pipe bracket support."
+        },
+        {
+          "code": "FIT-OFS-001",
+          "name": "Offset Bend",
+          "category": "Fittings",
+          "subcategory": "Offsets",
+          "function": "Shifts a section of pipeline parallel to another section to bypass structural beams, columns, or wall ledges.",
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "75mm", "110mm"],
+          "materials": ["GI", "PVC", "CPVC"],
+          "unit": "Nos",
+          "defaultRatePaise": 12500,
+          "taxRate": 18,
+          "notes": "Maintains uniform drainage slope while circumventing building obstructions."
+        },
+        {
+          "code": "FIT-TRP-P",
+          "name": "P-Trap with Water Seal",
+          "category": "Drainage",
+          "subcategory": "Traps",
+          "function": "P-shaped bend holding a minimum 50mm water seal to prevent foul sewer gases and explosive methane from entering living spaces.",
+          "standardSizes": ["1.25\" (32mm)", "1.5\" (40mm)", "110mm (4\")"],
+          "materials": ["PVC SWR", "Cast Iron", "Chrome Brass"],
+          "unit": "Nos",
+          "defaultRatePaise": 14500,
+          "taxRate": 18,
+          "notes": "Fitted directly below wash basins, sinks, and urinals."
+        },
+        {
+          "code": "FIT-TRP-S",
+          "name": "S-Trap with Floor Discharge",
+          "category": "Drainage",
+          "subcategory": "Traps",
+          "function": "S-shaped water seal trap directing discharge vertically downward through floor slabs into branch drain.",
+          "standardSizes": ["110 x 110 mm", "110 x 75 mm"],
+          "materials": ["PVC", "Ceramic / Vitreous China", "CI"],
+          "unit": "Nos",
+          "defaultRatePaise": 22000,
+          "taxRate": 18,
+          "notes": "Commonly used for floor-mounted European and Indian water closets."
+        },
+        {
+          "code": "FIT-TRP-BTL",
+          "name": "Bottle Trap (Detachable Sump)",
+          "category": "Drainage",
+          "subcategory": "Traps",
+          "function": "Compact cylindrical trap with removable bottom cup for intercepting dropped jewelry, hair, and debris.",
+          "standardSizes": ["32mm (1.25\") with 300mm extension pipe"],
+          "materials": ["Brass Chrome Plated", "Virgin Polypropylene (White)"],
+          "unit": "Nos",
+          "defaultRatePaise": 85000,
+          "taxRate": 18,
+          "notes": "Exposed aesthetic fitting installed beneath designer vanity wash basins."
+        },
+        {
+          "code": "FIT-TRP-NAH",
+          "name": "Nahani / Multi-Inlet Floor Trap",
+          "category": "Drainage",
+          "subcategory": "Traps",
+          "function": "Shallow water seal trap with removable stainless steel grating installed flush with bathroom/kitchen floor tiles.",
+          "standardSizes": ["110 x 75 mm", "110 x 50 mm"],
+          "materials": ["Heavy PVC with SS 304 Grate"],
+          "unit": "Nos",
+          "defaultRatePaise": 18000,
+          "taxRate": 18,
+          "notes": "Receives wastewater from floor wash, bath shower, and basin waste pipe."
+        },
+        {
+          "code": "FIT-GSK-FLG",
+          "name": "Flange Gasket (Spiral-Wound / Rubber / Neoprene)",
+          "category": "Fittings",
+          "subcategory": "Gaskets & Seals",
+          "function": "Ring-shaped mechanical seal clamped between two pipe flanges to prevent leakage under high pressure.",
+          "specifications": {
+            "types": ["Non-metallic (Rubber/Neoprene)", "Spiral-Wound SS/Graphite", "Ring-Joint type"]
+          },
+          "standardSizes": ["25mm (1\")", "50mm (2\")", "80mm (3\")", "100mm (4\")", "150mm (6\")"],
+          "materials": ["EPDM / Nitrile Rubber", "Asbestos-free CAF", "Spiral SS316"],
+          "unit": "Nos",
+          "defaultRatePaise": 4500,
+          "taxRate": 18,
+          "notes": "Withstands line vibration, pressure surges, and rapid temperature fluctuations."
+        }
+      ]
+    },
+    {
+      "id": "valves",
+      "name": "Valves & Flow Controls",
+      "description": "Mechanical devices manufactured from brass, bronze, cast iron, or gunmetal used to stop, regulate, throttle, or control unidirectional liquid and gas flow in mains and service pipes.",
+      "items": [
+        {
+          "code": "VLV-SLU-001",
+          "name": "Sluice Valve (Isolation Valve Class 1 & 2)",
+          "category": "Valves and Cocks",
+          "subcategory": "Sluice & Gate",
+          "function": "Fitted at the entrance of water-supply mains or tank outlets to isolate sections during maintenance or emergency.",
+          "specifications": {
+            "standardBores": "50mm, 65mm, 80mm, 100mm, 150mm, 200mm, 250mm, 300mm",
+            "class1Pressure": "Test: Body 20 kg/cm², Seat 10 kg/cm²; Max working: 10 kg/cm²",
+            "class2Pressure": "Test: Body 30 kg/cm², Seat 15 kg/cm²; Max working: 15 kg/cm²"
+          },
+          "standardSizes": ["50mm (2\")", "65mm (2.5\")", "80mm (3\")", "100mm (4\")", "150mm (6\")"],
+          "materials": ["Cast Iron (CI) Body with Gunmetal / Bronze Trim"],
+          "unit": "Nos",
+          "defaultRatePaise": 285000,
+          "taxRate": 18,
+          "notes": "Full waterway minimizes friction; clockwise closure handwheel."
+        },
+        {
+          "code": "VLV-SCR-001",
+          "name": "Scour Valve (Blow-off / Drain Valve)",
+          "category": "Valves and Cocks",
+          "subcategory": "Sluice & Gate",
+          "function": "Fitted at the lowest depression points of a pipeline to drain and scour accumulated silt, mud, and sand into natural drains.",
+          "standardSizes": ["50mm (2\")", "80mm (3\")", "100mm (4\")"],
+          "materials": ["Cast Iron / Gunmetal"],
+          "unit": "Nos",
+          "defaultRatePaise": 310000,
+          "taxRate": 18,
+          "notes": "Crucial for periodic municipal and campus pipeline cleansing."
+        },
+        {
+          "code": "VLV-AIR-001",
+          "name": "Air Release & Vacuum Relief Valve",
+          "category": "Valves and Cocks",
+          "subcategory": "Air Valves",
+          "function": "Releases trapped air automatically while filling pipeline with water; allows air entry when draining to prevent vacuum collapse.",
+          "specifications": {
+            "bores": "8mm, 10mm, 15mm, 20mm, 25mm, 32mm, 40mm, 50mm",
+            "threads": "Internally or Externally threaded socket outlet",
+            "washers": "Fibre, leather, rubber, or nylon disc washer"
+          },
+          "standardSizes": ["1/2\" (15mm)", "3/4\" (20mm)", "1\" (25mm)", "2\" (50mm)"],
+          "materials": ["Cast Brass / Leaded Tin Bronze"],
+          "unit": "Nos",
+          "defaultRatePaise": 85000,
+          "taxRate": 18,
+          "notes": "Mounted at summit peaks of long piping headers to prevent air locks."
+        },
+        {
+          "code": "VLV-GAT-SPL",
+          "name": "Gate Valve (Solid / Split Wedge / Parallel Slide)",
+          "category": "Valves and Cocks",
+          "subcategory": "Sluice & Gate",
+          "function": "Used for starting or stopping straight-line fluid flow with minimal restriction; operated fully open or fully closed.",
+          "specifications": {
+            "spindleTypes": ["Rising Spindle (spindle ascends when opened)", "Non-Rising Spindle (compact space)"],
+            "wedgeTypes": ["Solid Wedge", "Split Taper Wedge", "Parallel Slide Double Disc"]
+          },
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.25\"", "1.5\"", "2\"", "2.5\"", "3\""],
+          "materials": ["Forged Brass / Bronze / Cast Steel"],
+          "unit": "Nos",
+          "defaultRatePaise": 58000,
+          "taxRate": 18,
+          "notes": "Provides bi-directional shutoff with zero straight-line pressure drop."
+        },
+        {
+          "code": "VLV-GLB-001",
+          "name": "Globe Valve (Throttling & Regulating)",
+          "category": "Valves and Cocks",
+          "subcategory": "Regulating Valves",
+          "function": "Spherical body valve with movable disc element and stationary ring seat, specifically engineered for throttling and flow volume regulation.",
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.5\"", "2\""],
+          "materials": ["Forged Brass / Cast Bronze"],
+          "unit": "Nos",
+          "defaultRatePaise": 72000,
+          "taxRate": 18,
+          "notes": "Precise multi-turn flow rate adjustments; higher head loss than gate valves."
+        },
+        {
+          "code": "VLV-ANG-001",
+          "name": "Angle Valve (90° Inlet-to-Outlet Control)",
+          "category": "Valves and Cocks",
+          "subcategory": "Angle Valves",
+          "function": "Valve with inlet and outlet ports oriented at 90°, where disc moves perpendicular to seat to control flow to fixtures.",
+          "standardSizes": ["1/2\" with Wall Flange", "1/2\" Two-Way"],
+          "materials": ["Forged Brass Heavy Chrome Plated", "SS 304"],
+          "unit": "Nos",
+          "defaultRatePaise": 38000,
+          "taxRate": 18,
+          "notes": "Standard point-of-use isolation for geysers, toilet cisterns, health faucets, and basins."
+        },
+        {
+          "code": "VLV-NRV-CHK",
+          "name": "Check Valve / Non-Return Valve (NRV)",
+          "category": "Valves and Cocks",
+          "subcategory": "Non-Return Valves",
+          "function": "Automatic one-way check valve operated by line fluid pressure; permits forward flow while instantaneously blocking reverse backflow.",
+          "specifications": {
+            "types": ["Swing Check (tilting flapper)", "Horizontal Lift Check", "Vertical Spring Check"]
+          },
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.25\"", "1.5\"", "2\""],
+          "materials": ["Extruded Brass / Bronze with SS Spring"],
+          "unit": "Nos",
+          "defaultRatePaise": 52000,
+          "taxRate": 18,
+          "notes": "Installed after water pumps to prevent water hammer and protect impeller from back-pressure."
+        },
+        {
+          "code": "VLV-FER-001",
+          "name": "Ferrule Cock (Corporation Ferrule)",
+          "category": "Valves and Cocks",
+          "subcategory": "Water Mains Connection",
+          "function": "Non-ferrous screw-down cock tapped directly into municipal underground water mains to link private service pipe connections.",
+          "standardSizes": ["1/2\" (15mm)", "3/4\" (20mm)", "1\" (25mm)"],
+          "materials": ["Gunmetal / Leaded Tin Bronze (BS 1982 / IS 2692)"],
+          "unit": "Nos",
+          "defaultRatePaise": 115000,
+          "taxRate": 18,
+          "notes": "Under-pressure tapping capability with integrated shutoff plug."
+        },
+        {
+          "code": "VLV-FOT-001",
+          "name": "Foot Valve with Stainless Steel Strainer",
+          "category": "Valves and Cocks",
+          "subcategory": "Pump Suction Valves",
+          "function": "Non-return check valve with exterior perforated debris strainer installed at the bottom of pump suction lines in open wells and sumps.",
+          "standardSizes": ["1\" (25mm)", "1.25\" (32mm)", "1.5\" (40mm)", "2\" (50mm)", "3\" (80mm)"],
+          "materials": ["Heavy Cast Brass / CI with SS 304 Strainer mesh"],
+          "unit": "Nos",
+          "defaultRatePaise": 48000,
+          "taxRate": 18,
+          "notes": "Maintains liquid column inside suction pipe so pump stays permanently primed."
+        },
+        {
+          "code": "VLV-FLT-001",
+          "name": "Float Valve (Ball Float Valve with Brass Lever)",
+          "category": "Valves and Cocks",
+          "subcategory": "Tank Level Controls",
+          "function": "Mechanically actuated valve attached to an air-filled float ball; rises with water level to shut off inlet supply when tank/cistern is full.",
+          "standardSizes": ["1/2\" (15mm)", "3/4\" (20mm)", "1\" (25mm)", "1.5\" (40mm)"],
+          "materials": ["Brass Valve Body with Heavy Copper/HDPE Float Ball"],
+          "unit": "Nos",
+          "defaultRatePaise": 65000,
+          "taxRate": 18,
+          "notes": "Prevents overflowing in rooftop water storage tanks and toilet flush cisterns."
+        },
+        {
+          "code": "VLV-BAL-001",
+          "name": "Full Bore Quarter-Turn Brass Ball Valve",
+          "category": "Valves and Cocks",
+          "subcategory": "Quarter Turn Valves",
+          "function": "Quick 90-degree lever handle rotating a chrome-plated brass sphere with bored orifice for zero-restriction shutoff.",
+          "standardSizes": ["1/2\"", "3/4\"", "1\"", "1.25\"", "1.5\"", "2\""],
+          "materials": ["Forged Brass Nickel Plated with PTFE Teflon Seats"],
+          "unit": "Nos",
+          "defaultRatePaise": 58000,
+          "taxRate": 18,
+          "notes": "Modern standard replacement for traditional gate valves in residential plumbing."
+        }
+      ]
+    },
+    {
+      "id": "pipe_joints",
+      "name": "Pipe Joints & Methods",
+      "description": "Standard pipe joining techniques, fabrication methods, and required joining materials across plumbing pipelines.",
+      "items": [
+        {
+          "code": "JNT-THRD-001",
+          "name": "Threaded Joint (Screwed Joint)",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Pipes joined by screwing male external threads into female internal threads using PTFE tape or thread paste.",
+          "specifications": {
+            "applicableDiameters": "6 mm to 300 mm diameter pipes",
+            "compatiblePipes": "GI, PVC, CPVC, Cast Iron, Copper pipes",
+            "toolsRequired": "Pipe die set, pipe wrench, thread seal tape"
+          },
+          "standardSizes": ["1/2\" to 4\" BSPT / NPT threads"],
+          "materials": ["PTFE Teflon tape / Loctite 55 thread seal"],
+          "unit": "Point",
+          "defaultRatePaise": 12000,
+          "taxRate": 18,
+          "notes": "Removable mechanical joint; do not over-torque to prevent female socket split."
+        },
+        {
+          "code": "JNT-WELD-BUTT",
+          "name": "Butt-Welded Joint",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Pipe ends prepared with beveled edges, abutted together, and fused with electric arc or gas welding.",
+          "specifications": {
+            "applications": "Commercial, institutional, and industrial high-pressure steam/water systems",
+            "advantages": "Low material cost, maximum tensile and burst strength",
+            "considerations": "Requires certified skilled welders and pipe fitters"
+          },
+          "standardSizes": ["50mm (2\") to 300mm (12\")"],
+          "materials": ["MS / Carbon Steel / Stainless Steel electrodes"],
+          "unit": "Job",
+          "defaultRatePaise": 45000,
+          "taxRate": 18,
+          "notes": "100% leak-proof under thermal and pressure cycles."
+        },
+        {
+          "code": "JNT-WELD-SOCK",
+          "name": "Socket-Welded Joint",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "One pipe end inserted into an expanded female socket or fitting, and welded around the circumference.",
+          "specifications": {
+            "advantages": "Zero risk of internal weld splatter, highest resistance to leakage",
+            "sizeSuitability": "Ideal for joining different pipe diameters"
+          },
+          "standardSizes": ["15mm to 100mm"],
+          "materials": ["Steel / High Pressure Alloy"],
+          "unit": "Job",
+          "defaultRatePaise": 38000,
+          "taxRate": 18,
+          "notes": "Leaves 1.5mm thermal expansion gap before perimeter fillet welding."
+        },
+        {
+          "code": "JNT-BRAZ-001",
+          "name": "Brazed Joint (High Temperature >840°C)",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Joining copper or copper alloy pipes by melting a filler rod (silver-copper-phosphorus) at temperatures exceeding 840°C.",
+          "specifications": {
+            "meltingPointRule": "Melting point of parent pipe must be strictly higher than filler rod",
+            "temperatures": "Above 840°C using oxy-acetylene or LPG-air torch",
+            "temperatureResistance": "Preferred for moderate to high thermal cycles"
+          },
+          "standardSizes": ["15mm to 54mm OD copper tube"],
+          "materials": ["Silver brazing alloy rod + Brazing flux paste"],
+          "unit": "Point",
+          "defaultRatePaise": 32000,
+          "taxRate": 18,
+          "notes": "Used in medical gas pipelines, solar water heater loops, and VRV/AC refrigeration lines."
+        },
+        {
+          "code": "JNT-SOLD-001",
+          "name": "Soldered Joint (Sweat Joint <840°C)",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Joining copper capillary fittings with lead-free filler wire melting below 840°C using liquid flux to prevent oxidation.",
+          "specifications": {
+            "temperatures": "Below 840°C (typically 220°C - 250°C)",
+            "fluxUsage": "Soldering flux applied to clean copper to facilitate capillary flow",
+            "strength": "Lower mechanical strength than brazing; suited for domestic water supply"
+          },
+          "standardSizes": ["15mm, 22mm, 28mm copper tube"],
+          "materials": ["Tin-Copper lead-free solder wire + Zinc chloride flux"],
+          "unit": "Point",
+          "defaultRatePaise": 24000,
+          "taxRate": 18,
+          "notes": "Capillary action draws molten solder into joint gap."
+        },
+        {
+          "code": "JNT-GROV-001",
+          "name": "Grooved Mechanical Joint (Victaulic Type)",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Pipes joined by roll-grooving the pipe ends, enclosed with an elastomeric C-shaped rubber gasket and bolted ductile iron housing.",
+          "specifications": {
+            "features": "Fast assembly, low labour cost, vibration absorption, easy disassembly",
+            "primaryUse": "Fire fighting sprinkler mains, chilled water HVAC risers"
+          },
+          "standardSizes": ["50mm (2\") to 200mm (8\")"],
+          "materials": ["Ductile Iron Couplings + EPDM Gasket"],
+          "unit": "Job",
+          "defaultRatePaise": 35000,
+          "taxRate": 18,
+          "notes": "Permits pipeline expansion and contraction without expansion loops."
+        },
+        {
+          "code": "JNT-FLNG-001",
+          "name": "Flanged Joint with High Tensile Bolts",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Bolted joint between mating rim plates welded or screwed to pipe ends, compressed against a resilient rubber or CAF gasket.",
+          "specifications": {
+            "applications": "Water pumping stations, filtration plants, boiler houses, header manifolds",
+            "advantages": "Zero leakage across rapid temperature swings, easy unbolting for pump overhaul"
+          },
+          "standardSizes": ["50mm, 65mm, 80mm, 100mm, 150mm, 200mm"],
+          "materials": ["MS / Forged Carbon Steel Flanges (Table D/E/F) + Grade 8.8 Bolts"],
+          "unit": "Job",
+          "defaultRatePaise": 65000,
+          "taxRate": 18,
+          "notes": "Tighten bolts in diagonal star sequence to ensure uniform gasket compression."
+        },
+        {
+          "code": "JNT-COMP-001",
+          "name": "Compression Joint (Ferrule Fitting)",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Joins plain-end copper, brass, or MDPE pipes without cutting threads or heating, using a brass olive/compression ring tightened by a cap nut.",
+          "specifications": {
+            "preparation": "Zero pipe preparation needed; square cut and deburr only",
+            "installationCost": "Highly economical, fast on-site repair"
+          },
+          "standardSizes": ["15mm, 20mm, 25mm, 32mm"],
+          "materials": ["Brass Compression Body + Brass / Copper Olive Ring"],
+          "unit": "Point",
+          "defaultRatePaise": 18000,
+          "taxRate": 18,
+          "notes": "Widely used for connecting concealed MDPE water meter lines and basin mixer inlets."
+        },
+        {
+          "code": "JNT-SLV-001",
+          "name": "Solvent Cement Cold Weld Joint (PVC / CPVC)",
+          "category": "Labour and Service",
+          "subcategory": "Pipe Joints",
+          "function": "Chemical fusion joint where solvent primer and cement dissolve outer pipe skin and inner fitting socket, re-solidifying into a monolithic joint.",
+          "specifications": {
+            "curingTime": "Initial set 15 minutes, full pressure test after 24 hours",
+            "tools": "Pipe deburrer, natural bristle dauber"
+          },
+          "standardSizes": ["1/2\" to 4\""],
+          "materials": ["CPVC Heavy Duty Orange Cement / PVC Clear Cement"],
+          "unit": "Point",
+          "defaultRatePaise": 6000,
+          "taxRate": 18,
+          "notes": "Apply 90-degree twist during insertion and hold for 30 seconds."
+        }
+      ]
+    }
+  ],
+  "pipeClampSpacingGuidelines": [
+    {
+      "diameterMm": 15,
+      "diameterInch": "1/2\"",
+      "horizontalSpacingMeters": 2.0,
+      "verticalSpacingMeters": 2.5,
+      "mortarRatio": "1:3 (1 cement : 3 coarse sand)",
+      "wallClearanceCm": 1.5
+    },
+    {
+      "diameterMm": 20,
+      "diameterInch": "3/4\"",
+      "horizontalSpacingMeters": 2.5,
+      "verticalSpacingMeters": 3.0,
+      "mortarRatio": "1:3",
+      "wallClearanceCm": 1.5
+    },
+    {
+      "diameterMm": 25,
+      "diameterInch": "1\"",
+      "horizontalSpacingMeters": 2.5,
+      "verticalSpacingMeters": 3.0,
+      "mortarRatio": "1:3",
+      "wallClearanceCm": 1.5
+    },
+    {
+      "diameterMm": 32,
+      "diameterInch": "1.25\"",
+      "horizontalSpacingMeters": 2.5,
+      "verticalSpacingMeters": 3.0,
+      "mortarRatio": "1:3",
+      "wallClearanceCm": 1.5
+    },
+    {
+      "diameterMm": 40,
+      "diameterInch": "1.5\"",
+      "horizontalSpacingMeters": 3.0,
+      "verticalSpacingMeters": 3.5,
+      "mortarRatio": "1:3",
+      "wallClearanceCm": 1.5
+    },
+    {
+      "diameterMm": 50,
+      "diameterInch": "2\"",
+      "horizontalSpacingMeters": 3.0,
+      "verticalSpacingMeters": 3.5,
+      "mortarRatio": "1:3",
+      "wallClearanceCm": 1.5
+    },
+    {
+      "diameterMm": 65,
+      "diameterInch": "2.5\"",
+      "horizontalSpacingMeters": 3.5,
+      "verticalSpacingMeters": 5.0,
+      "mortarRatio": "1:3",
+      "wallClearanceCm": 1.5
+    },
+    {
+      "diameterMm": 80,
+      "diameterInch": "3\"",
+      "horizontalSpacingMeters": 3.5,
+      "verticalSpacingMeters": 5.0,
+      "mortarRatio": "1:3",
+      "wallClearanceCm": 1.5
+    }
+  ],
+  "technicalVocabulary": [
+    {
+      "term": "Assembly",
+      "definition": "Process by which individual standard part samples are connected to one another to create a larger functional plumbing network."
+    },
+    {
+      "term": "Bending",
+      "definition": "Technique used in metal forming processes to turn pipe at angles (e.g. 90° or 45°) to eliminate excessive fittings."
+    },
+    {
+      "term": "Chipping",
+      "definition": "Removal of old mortar, spatter, rust, or concrete chase work using hammer and cold chisel for concealed piping."
+    },
+    {
+      "term": "Die",
+      "definition": "Tool used to cut or form external male screw threads onto the ends of GI, brass, or plastic pipes."
+    },
+    {
+      "term": "Tap",
+      "definition": "Tool used to cut or form internal female screw threads into pipe fittings and sockets."
+    },
+    {
+      "term": "Threading",
+      "definition": "The precise machining operation of forming helical ridges on a pipe end using a pipe threader or die set."
+    },
+    {
+      "term": "Water Seal",
+      "definition": "Column of stagnant clean water retained in trap bends (P, S, or bottle trap) preventing harmful sewer gas inhalation."
+    }
+  ]
+}
