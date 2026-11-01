@@ -228,6 +228,7 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({
           pdf.setFontSize(9);
           pdf.setTextColor(30, 41, 59);
           const descText =
+            line.descriptionParagraph ||
             line.sizeSpec ||
             `Plumbing, pipeline and fitting work for ${line.quantity} ${line.unit}.`;
           const splitDesc = pdf.splitTextToSize(descText, pageWidth - 85);
@@ -235,9 +236,11 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({
 
           const amtText = `Rs. ${(line.lineTotalPaise / 100).toLocaleString('en-IN')}/-`;
           const calcLabel =
-            line.quantity > 1
+            line.isCustomScopeBlock || line.descriptionParagraph
+              ? 'Scope of Work Cost'
+              : line.quantity > 1
               ? `Estimated Cost = ${line.quantity} ${line.unit} x Rs. ${(line.ratePaise / 100).toLocaleString('en-IN')}/-`
-              : 'Remaining Payment Balance';
+              : 'Work & Material Cost';
 
           pdf.setFont('times', 'bold');
           pdf.setFontSize(9);
@@ -868,16 +871,19 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({
                     {line.name}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-800 leading-relaxed max-w-2xl">
-                    {line.sizeSpec ||
+                  <p className="text-xs sm:text-sm text-slate-800 leading-relaxed max-w-3xl whitespace-pre-line mt-1">
+                    {line.descriptionParagraph ||
+                      line.sizeSpec ||
                       `Plumbing, pipeline and fitting work for ${line.quantity} ${line.unit}.`}
                   </p>
 
                   <div className="flex items-center justify-end gap-6 sm:gap-10 pt-2 text-xs sm:text-sm">
                     <span className="font-bold text-slate-900">
-                      {line.quantity > 1
+                      {line.isCustomScopeBlock || line.descriptionParagraph
+                        ? 'Scope of Work Cost'
+                        : line.quantity > 1
                         ? `Estimated Cost = ${line.quantity} ${line.unit} x Rs. ${(line.ratePaise / 100).toLocaleString('en-IN')}/-`
-                        : 'Remaining Payment Balance'}
+                        : 'Work & Material Cost'}
                     </span>
                     <span
                       style={{ color: cfg.totals.highlightColor || cfg.styling.primaryColor }}
@@ -988,11 +994,15 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({
                             >
                               {line.name}
                             </div>
-                            {format.columnVisibility.sizeSpec && line.sizeSpec && (
+                            {line.descriptionParagraph ? (
+                              <div className="text-xs text-slate-700 font-sans whitespace-pre-line mt-1 bg-slate-50 p-2 rounded-lg border border-slate-200/80 leading-relaxed">
+                                {line.descriptionParagraph}
+                              </div>
+                            ) : format.columnVisibility.sizeSpec && line.sizeSpec ? (
                               <div className="text-xs text-slate-600 font-sans">
                                 {line.sizeSpec}
                               </div>
-                            )}
+                            ) : null}
                           </td>
                         )}
                         {format.columnVisibility.quantity && (

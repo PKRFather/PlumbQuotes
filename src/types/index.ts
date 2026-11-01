@@ -87,6 +87,8 @@ export interface DocumentLine {
   ratePaise: number;
   taxRate: number;
   lineTotalPaise: number;
+  isCustomScopeBlock?: boolean; // Custom narrative paragraph / contractor work scope block
+  descriptionParagraph?: string; // Multi-line custom paragraph written by contractor
 }
 
 export interface Payment {
