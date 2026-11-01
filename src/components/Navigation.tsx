@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   FileText,
   BookOpen,
@@ -6,10 +6,10 @@ import {
   Settings,
   LayoutDashboard,
   Plus,
-  WifiOff,
   Sliders,
+  Receipt,
 } from 'lucide-react';
-import { DocumentType } from '../types';
+import { DocumentType, OwnerAccount } from '../types';
 
 export type TabType = 'home' | 'documents' | 'glossary' | 'customers' | 'formats' | 'settings';
 
@@ -18,7 +18,55 @@ interface NavigationProps {
   onSelectTab: (tab: TabType) => void;
   onNewDocument: (type: DocumentType) => void;
   businessName: string;
+  ownerAccount?: OwnerAccount;
+  onOpenOwnerAccount?: () => void;
 }
+
+interface NavItem {
+  id: TabType;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  tooltip: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  {
+    id: 'home',
+    label: 'Home',
+    icon: LayoutDashboard,
+    tooltip: 'Dashboard Overview',
+  },
+  {
+    id: 'documents',
+    label: 'Quotes & Bills',
+    icon: FileText,
+    tooltip: 'Quotations and Tax Invoices',
+  },
+  {
+    id: 'glossary',
+    label: 'Pipe Catalog',
+    icon: BookOpen,
+    tooltip: 'Pipe Fittings, Valves & Joints Glossary',
+  },
+  {
+    id: 'customers',
+    label: 'Customers',
+    icon: Users,
+    tooltip: 'Customer & Project Sites Directory',
+  },
+  {
+    id: 'formats',
+    label: 'Letterhead',
+    icon: Sliders,
+    tooltip: 'P.H.D Contractor Letterhead Style',
+  },
+  {
+    id: 'settings',
+    label: 'Settings',
+    icon: Settings,
+    tooltip: 'Business Profile & Bank Details',
+  },
+];
 
 export const Navigation: React.FC<NavigationProps> = ({
   currentTab,
@@ -26,182 +74,161 @@ export const Navigation: React.FC<NavigationProps> = ({
   onNewDocument,
   businessName,
 }) => {
+  // Clicking an active menu item toggles back to 'home'
+  const handleItemClick = (tab: TabType) => {
+    if (currentTab === tab && tab !== 'home') {
+      onSelectTab('home');
+    } else {
+      onSelectTab(tab);
+    }
+  };
+
+  // Keyboard shortcut listener (Alt+1 through Alt+6, Alt+Q, Alt+B)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        return;
+      }
+
+      if (e.altKey) {
+        if (e.key === '1') {
+          e.preventDefault();
+          handleItemClick('home');
+        } else if (e.key === '2') {
+          e.preventDefault();
+          handleItemClick('documents');
+        } else if (e.key === '3') {
+          e.preventDefault();
+          handleItemClick('glossary');
+        } else if (e.key === '4') {
+          e.preventDefault();
+          handleItemClick('customers');
+        } else if (e.key === '5') {
+          e.preventDefault();
+          handleItemClick('formats');
+        } else if (e.key === '6') {
+          e.preventDefault();
+          handleItemClick('settings');
+        } else if (e.key.toLowerCase() === 'q') {
+          e.preventDefault();
+          onNewDocument('quotation');
+        } else if (e.key.toLowerCase() === 'b') {
+          e.preventDefault();
+          onNewDocument('bill');
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentTab, onSelectTab, onNewDocument]);
+
   return (
     <>
-      {/* Mobile & Desktop Header Top Bar */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-15 flex items-center justify-between">
-          {/* Brand Wordmark & Status */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => onSelectTab('home')}
-              className="flex items-center gap-2.5 text-left group"
-            >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-600 to-sky-500 flex items-center justify-center text-white shadow-sm font-bold text-base">
-                PQ
-              </div>
-              <div>
-                <h1 className="text-sm font-bold text-slate-900 group-hover:text-sky-600 transition-colors leading-tight">
-                  PlumbQuote
-                </h1>
-                <p className="text-[11px] text-slate-500 truncate max-w-[150px] sm:max-w-xs font-medium">
-                  {businessName || 'Plumbing Quotation & Bill'}
-                </p>
-              </div>
-            </button>
-
-            {/* Offline Badge */}
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-medium border border-slate-200">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span>100% Offline Ready</span>
+      {/* Simple, Clean Top Navigation Bar */}
+      <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs select-none">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 flex items-center justify-between gap-2">
+          {/* Left: Brand Icon & Title */}
+          <button
+            onClick={() => onSelectTab('home')}
+            className="flex items-center gap-2 text-left group shrink-0"
+            title="Return to Home Dashboard"
+          >
+            <div className="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white font-black text-sm shadow-xs">
+              PQ
             </div>
-          </div>
+            <div className="hidden sm:block">
+              <span className="font-bold text-slate-900 text-sm group-hover:text-sky-600 transition-colors block leading-tight">
+                PlumbQuotes
+              </span>
+              <span className="text-[11px] text-slate-500 block leading-none">
+                {businessName || 'P.H.D Contractor'}
+              </span>
+            </div>
+          </button>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-1 text-sm font-medium">
-            <button
-              onClick={() => onSelectTab('home')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                currentTab === 'home'
-                  ? 'bg-sky-50 text-sky-700 font-semibold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => onSelectTab('documents')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                currentTab === 'documents'
-                  ? 'bg-sky-50 text-sky-700 font-semibold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Quotes &amp; Bills
-            </button>
-            <button
-              onClick={() => onSelectTab('glossary')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                currentTab === 'glossary'
-                  ? 'bg-sky-50 text-sky-700 font-semibold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Plumbing Items
-            </button>
-            <button
-              onClick={() => onSelectTab('customers')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                currentTab === 'customers'
-                  ? 'bg-sky-50 text-sky-700 font-semibold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Customers
-            </button>
-            <button
-              onClick={() => onSelectTab('formats')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                currentTab === 'formats'
-                  ? 'bg-sky-50 text-sky-700 font-semibold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Letterhead Formats
-            </button>
-            <button
-              onClick={() => onSelectTab('settings')}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                currentTab === 'settings'
-                  ? 'bg-sky-50 text-sky-700 font-semibold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Settings
-            </button>
+          {/* Center: Clean Icon Navigation Buttons */}
+          <nav aria-label="Main Navigation" className="flex items-center gap-1 sm:gap-2">
+            {NAV_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const isActive = currentTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleItemClick(item.id)}
+                  title={
+                    isActive && item.id !== 'home'
+                      ? `${item.tooltip} (Click again to return Home)`
+                      : item.tooltip
+                  }
+                  className={`flex items-center gap-1.5 px-2.5 sm:px-3 h-9 rounded-lg text-xs font-semibold transition-all ${
+                    isActive
+                      ? 'bg-sky-50 text-sky-700 shadow-xs border border-sky-200'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 ${isActive ? 'stroke-[2.5] text-sky-700' : 'stroke-[1.8]'}`} />
+                  <span className="hidden md:inline">{item.label}</span>
+                </button>
+              );
+            })}
           </nav>
 
-          {/* Quick Action CTAs */}
-          <div className="flex items-center gap-2">
+          {/* Right: Quick Action CTAs */}
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               onClick={() => onNewDocument('quotation')}
-              className="h-9 px-3 sm:px-3.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm active:scale-95 transition-all"
+              className="h-8 sm:h-9 px-2.5 sm:px-3 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1 shadow-xs active:scale-95 transition-all"
+              title="Create New Quotation"
             >
-              <Plus className="w-4 h-4" />
-              <span>New Quotation</span>
+              <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span className="hidden sm:inline">New Quote</span>
+              <span className="sm:hidden text-[11px]">Quote</span>
             </button>
+
             <button
               onClick={() => onNewDocument('bill')}
-              className="hidden sm:flex h-9 px-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold items-center gap-1.5 shadow-sm active:scale-95 transition-all"
+              className="h-8 sm:h-9 px-2.5 sm:px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1 shadow-xs active:scale-95 transition-all"
+              title="Create New Bill"
             >
-              <Plus className="w-4 h-4" />
-              <span>New Bill</span>
+              <Receipt className="w-3.5 h-3.5 stroke-[2]" />
+              <span className="hidden sm:inline">New Bill</span>
+              <span className="sm:hidden text-[11px]">Bill</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Android Mobile Bottom Tab Bar (Thumbs-optimized, 60px height, safe padding) */}
-      <nav aria-label="Mobile Navigation" className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200 shadow-lg px-2 py-1 flex items-center justify-around h-16">
-        <button
-          onClick={() => onSelectTab('home')}
-          className={`flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-2 py-1 rounded-xl transition-all ${
-            currentTab === 'home'
-              ? 'text-sky-700 font-semibold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <LayoutDashboard className={`w-5 h-5 ${currentTab === 'home' ? 'stroke-[2.5]' : ''}`} />
-          <span className="text-[10px] mt-0.5 tracking-tight">Home</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('documents')}
-          className={`flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-2 py-1 rounded-xl transition-all ${
-            currentTab === 'documents'
-              ? 'text-sky-700 font-semibold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <FileText className={`w-5 h-5 ${currentTab === 'documents' ? 'stroke-[2.5]' : ''}`} />
-          <span className="text-[10px] mt-0.5 tracking-tight">Documents</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('glossary')}
-          className={`flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-2 py-1 rounded-xl transition-all ${
-            currentTab === 'glossary'
-              ? 'text-sky-700 font-semibold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <BookOpen className={`w-5 h-5 ${currentTab === 'glossary' ? 'stroke-[2.5]' : ''}`} />
-          <span className="text-[10px] mt-0.5 tracking-tight">Items</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('customers')}
-          className={`flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-2 py-1 rounded-xl transition-all ${
-            currentTab === 'customers'
-              ? 'text-sky-700 font-semibold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <Users className={`w-5 h-5 ${currentTab === 'customers' ? 'stroke-[2.5]' : ''}`} />
-          <span className="text-[10px] mt-0.5 tracking-tight">Customers</span>
-        </button>
-
-        <button
-          onClick={() => onSelectTab('settings')}
-          className={`flex flex-col items-center justify-center min-w-[56px] min-h-[48px] px-2 py-1 rounded-xl transition-all ${
-            currentTab === 'settings'
-              ? 'text-sky-700 font-semibold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-        >
-          <Settings className={`w-5 h-5 ${currentTab === 'settings' ? 'stroke-[2.5]' : ''}`} />
-          <span className="text-[10px] mt-0.5 tracking-tight">Settings</span>
-        </button>
+      {/* Mobile Bottom Tab Bar */}
+      <nav
+        aria-label="Mobile Navigation"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-lg px-2 py-1 flex items-center justify-around h-15"
+      >
+        {NAV_ITEMS.map((item) => {
+          const Icon = item.icon;
+          const isActive = currentTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => handleItemClick(item.id)}
+              className={`flex flex-col items-center justify-center min-w-[50px] min-h-[44px] px-1 py-1 rounded-lg transition-all ${
+                isActive
+                  ? 'text-sky-700 font-bold'
+                  : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Icon
+                className={`w-4 h-4 ${
+                  isActive ? 'stroke-[2.5] text-sky-700 scale-110' : 'stroke-[1.8]'
+                }`}
+              />
+              <span className="text-[10px] mt-0.5 tracking-tight font-medium">
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
       </nav>
     </>
   );

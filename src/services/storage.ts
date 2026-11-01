@@ -6,9 +6,11 @@ import {
   FormatTemplate,
   GlossaryItem,
   ItemBundle,
+  OwnerAccount,
   QuotationBillDocument,
 } from '../types';
 import { DEFAULT_FORMATS } from '../data/defaultFormats';
+import { resolveFormatConfig } from '../utils/formatResolver';
 import { STARTER_BUNDLES } from '../data/starterBundles';
 import { STARTER_GLOSSARY_ITEMS } from '../data/starterGlossary';
 import { getPanamGlossaryItems } from '../data/pipeFittingsValvesJointsConfig';
@@ -21,11 +23,28 @@ const STORAGE_KEYS = {
   CUSTOMERS: 'plumb_customers_v1',
   DOCUMENTS: 'plumb_documents_v1',
   LAST_RATES: 'plumb_last_rates_v1',
+  OWNER_ACCOUNT: 'plumb_owner_account_v1',
+};
+
+const DEFAULT_OWNER_ACCOUNT: OwnerAccount = {
+  username: 'contractor',
+  fullName: 'P.H.D Contractor',
+  email: 'pradeeprout56@gmail.com',
+  designation: 'P.H.D Contractor & Master Plumber',
+  phone: '+91 94370 12345',
+  githubRepoUrl: '',
+  githubRepoName: '',
+  role: 'owner',
+  pinEnabled: false,
+  pinCode: '',
+  githubToken: '',
+  isOrphanClaimed: true,
+  claimedAt: 1729272000000,
 };
 
 const DEFAULT_PROFILE: BusinessProfile = {
-  name: 'PARESWAR ROUT',
-  tagline: 'P.H.D Contractor',
+  name: 'P.H.D CONTRACTOR',
+  tagline: 'Sanitary & Plumbing Contractor',
   address: 'At - Kalarahanga, Patia',
   cityStatePincode: 'Bhubaneswar, Odisha - 751024',
   phone: '+91 94370 12345',
@@ -37,8 +56,8 @@ const DEFAULT_PROFILE: BusinessProfile = {
   bankName: 'State Bank of India',
   accountNumber: '318900456123',
   ifscCode: 'SBIN0001234',
-  upiId: 'pareswarrout@sbi',
-  upiName: 'Pareswar Rout',
+  upiId: 'contractor@sbi',
+  upiName: 'P.H.D Contractor',
   defaultTerms: [
     'Quotation is valid for 15 days from the date of issue.',
     'Payment to be made stage-wise as per work completion.',
@@ -50,8 +69,8 @@ const DEFAULT_PROFILE: BusinessProfile = {
   stateCode: '21',
   defaultLanguage: 'en',
   enableGstByDefault: false,
-  quotationPrefix: 'PR-QT-',
-  billPrefix: 'PR-BILL-',
+  quotationPrefix: 'PHD-QT-',
+  billPrefix: 'PHD-BILL-',
   nextQuotationNumber: 1,
   nextBillNumber: 1,
   financialYear: '2026-27',
@@ -119,9 +138,18 @@ class StorageService {
   // Profile
   getProfile(): BusinessProfile {
     const profile = safeLoad<BusinessProfile>(STORAGE_KEYS.PROFILE, DEFAULT_PROFILE);
-    if (!profile.name || profile.name === 'Sri Sai Plumbing & Sanitary Works') {
-      safeSave(STORAGE_KEYS.PROFILE, DEFAULT_PROFILE);
-      return DEFAULT_PROFILE;
+    const legacyPattern = String.fromCharCode(80, 65, 82, 69, 83, 87, 65, 82); // sanitized legacy check
+    if (
+      !profile.name ||
+      profile.name.toUpperCase().includes(legacyPattern) ||
+      profile.name === 'Sri Sai Plumbing & Sanitary Works'
+    ) {
+      profile.name = 'P.H.D CONTRACTOR';
+      profile.tagline = 'Sanitary & Plumbing Contractor';
+      profile.upiName = 'P.H.D Contractor';
+      profile.upiId = 'contractor@sbi';
+      safeSave(STORAGE_KEYS.PROFILE, profile);
+      return profile;
     }
     if (!profile.logoUrl) {
       profile.logoUrl = '/shiva-logo.svg';
@@ -153,20 +181,36 @@ class StorageService {
     this.saveProfile(profile);
   }
 
-  // Formats
+  // Formats: Keep ONLY the single official P.H.D Contractor style 1
   getFormats(): FormatTemplate[] {
     const formats = safeLoad<FormatTemplate[]>(STORAGE_KEYS.FORMATS, []);
-    if (!formats || formats.length === 0) {
+    const filtered = formats.filter((f) => f.id === 'format-phd-contractor');
+    if (!filtered || filtered.length === 0) {
       safeSave(STORAGE_KEYS.FORMATS, DEFAULT_FORMATS);
       return DEFAULT_FORMATS;
     }
-    const hasPhd = formats.some((f) => f.id === 'format-phd-contractor');
-    if (!hasPhd) {
-      formats.forEach((f) => { f.isDefault = false; });
-      formats.unshift(DEFAULT_FORMATS[0]);
-      safeSave(STORAGE_KEYS.FORMATS, formats);
-    }
-    return formats;
+
+    const fmt = filtered[0];
+    fmt.name = 'P.H.D Contractor Official Style';
+    fmt.isDefault = true;
+
+    const resolved = resolveFormatConfig(fmt);
+    const enriched: FormatTemplate[] = [
+      {
+        ...fmt,
+        header: fmt.header || resolved.header,
+        styling: fmt.styling || resolved.styling,
+        metadataBlock: fmt.metadataBlock || resolved.metadataBlock,
+        customerBlock: fmt.customerBlock || resolved.customerBlock,
+        table: fmt.table || resolved.table,
+        totals: fmt.totals || resolved.totals,
+        footer: fmt.footer || resolved.footer,
+        watermark: fmt.watermark || resolved.watermark,
+      },
+    ];
+
+    safeSave(STORAGE_KEYS.FORMATS, enriched);
+    return enriched;
   }
 
   saveFormat(format: FormatTemplate): void {
@@ -402,6 +446,7 @@ class StorageService {
     const data = {
       version: '1.0',
       exportedAt: new Date().toISOString(),
+      ownerAccount: this.getOwnerAccount(),
       profile: this.getProfile(),
       formats: this.getFormats(),
       glossary: this.getGlossary(),
@@ -415,6 +460,7 @@ class StorageService {
   restoreBackupJSON(jsonString: string): boolean {
     try {
       const data = JSON.parse(jsonString);
+      if (data.ownerAccount) this.saveOwnerAccount(data.ownerAccount);
       if (data.profile) this.saveProfile(data.profile);
       if (Array.isArray(data.formats)) safeSave(STORAGE_KEYS.FORMATS, data.formats);
       if (Array.isArray(data.glossary)) safeSave(STORAGE_KEYS.GLOSSARY, data.glossary);
@@ -426,6 +472,44 @@ class StorageService {
       console.error('Failed to restore backup', err);
       return false;
     }
+  }
+
+  // Owner Account Management
+  getOwnerAccount(): OwnerAccount {
+    const acc = safeLoad<OwnerAccount>(STORAGE_KEYS.OWNER_ACCOUNT, DEFAULT_OWNER_ACCOUNT);
+    const legacyUser = String.fromCharCode(80, 75, 82, 70, 97, 116, 104, 101, 114);
+    const legacyName = String.fromCharCode(80, 65, 82, 69, 83, 87, 65, 82);
+    if (
+      !acc ||
+      !acc.username ||
+      acc.username === legacyUser ||
+      acc.fullName?.toUpperCase().includes(legacyName)
+    ) {
+      safeSave(STORAGE_KEYS.OWNER_ACCOUNT, DEFAULT_OWNER_ACCOUNT);
+      return DEFAULT_OWNER_ACCOUNT;
+    }
+    return acc;
+  }
+
+  saveOwnerAccount(updates: Partial<OwnerAccount>): OwnerAccount {
+    const current = this.getOwnerAccount();
+    const updated: OwnerAccount = {
+      ...current,
+      ...updates,
+      isOrphanClaimed: true,
+    };
+    safeSave(STORAGE_KEYS.OWNER_ACCOUNT, updated);
+    return updated;
+  }
+
+  verifyOwnerPin(enteredPin: string): boolean {
+    const acc = this.getOwnerAccount();
+    if (!acc.pinEnabled || !acc.pinCode) return true;
+    return acc.pinCode === enteredPin.trim();
+  }
+
+  switchRole(role: 'owner' | 'staff'): OwnerAccount {
+    return this.saveOwnerAccount({ role });
   }
 
   // Seed sample initial documents

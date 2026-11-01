@@ -15,14 +15,20 @@ import {
   BookOpen,
   Layers,
   ChevronRight,
+  Crown,
+  Github,
+  ShieldCheck,
+  ExternalLink,
 } from 'lucide-react';
-import { DocumentType, QuotationBillDocument } from '../types';
+import { DocumentType, OwnerAccount, QuotationBillDocument } from '../types';
 import { calculateDocumentTotals } from '../utils/calculations';
 import { formatINR } from '../utils/numberToWords';
 
 interface HomeDashboardProps {
   documents: QuotationBillDocument[];
   businessName: string;
+  ownerAccount?: OwnerAccount;
+  onOpenOwnerAccount?: () => void;
   onNewDocument: (type: DocumentType) => void;
   onOpenDocument: (doc: QuotationBillDocument) => void;
   onViewAllDocuments: () => void;
@@ -32,6 +38,8 @@ interface HomeDashboardProps {
 export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   documents,
   businessName,
+  ownerAccount,
+  onOpenOwnerAccount,
   onNewDocument,
   onOpenDocument,
   onViewAllDocuments,
@@ -114,6 +122,44 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               <span>New Cash/GST Bill</span>
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Owner Account & Repository Status Strip */}
+      <div className="bg-gradient-to-r from-amber-50 via-amber-100/60 to-orange-50 border border-amber-200/90 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+        <div className="flex items-start sm:items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center shadow-sm shrink-0 font-bold">
+            <Crown className="w-5 h-5 text-amber-100" />
+          </div>
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-slate-900 text-sm sm:text-base">
+                Owner Account: {ownerAccount?.fullName || 'P.H.D Contractor'}
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300">
+                <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                Active
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
+              <span className="text-emerald-700 font-medium">Offline Storage Ready</span>
+              <span>•</span>
+              <span className="text-slate-500">Letterhead: P.H.D Contractor Official Style</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {onOpenOwnerAccount && (
+            <button
+              type="button"
+              onClick={onOpenOwnerAccount}
+              className="h-9 px-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
+            >
+              <Crown className="w-3.5 h-3.5" />
+              Manage Account
+            </button>
+          )}
         </div>
       </div>
 

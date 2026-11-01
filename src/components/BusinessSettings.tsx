@@ -12,20 +12,28 @@ import {
   Languages,
   PenTool,
   Save,
+  Crown,
+  Github,
+  ShieldCheck,
+  ExternalLink,
 } from 'lucide-react';
-import { BusinessProfile, LanguageCode } from '../types';
+import { BusinessProfile, LanguageCode, OwnerAccount } from '../types';
 import { storage } from '../services/storage';
 
 interface BusinessSettingsProps {
   profile: BusinessProfile;
+  ownerAccount?: OwnerAccount;
   onSaveProfile: (profile: BusinessProfile) => void;
   onDataRestored: () => void;
+  onOpenOwnerAccount?: () => void;
 }
 
 export const BusinessSettings: React.FC<BusinessSettingsProps> = ({
   profile,
+  ownerAccount,
   onSaveProfile,
   onDataRestored,
+  onOpenOwnerAccount,
 }) => {
   const [formData, setFormData] = useState<BusinessProfile>(profile);
   const [showSavedToast, setShowSavedToast] = useState(false);
@@ -115,6 +123,44 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = ({
         )}
       </div>
 
+      {/* Owner Account & GitHub Repository Hub */}
+      <div className="bg-gradient-to-r from-amber-50 via-amber-100/50 to-orange-50 p-5 rounded-2xl border border-amber-200/90 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-start sm:items-center gap-3">
+          <div className="w-11 h-11 rounded-2xl bg-amber-600 text-white flex items-center justify-center shadow-sm shrink-0">
+            <Crown className="w-6 h-6 text-amber-100" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="font-bold text-sm text-slate-900">
+                Account: {ownerAccount?.fullName || 'P.H.D Contractor'}
+              </h3>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold border border-emerald-300">
+                <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                Active
+              </span>
+            </div>
+            <p className="text-xs text-slate-600 mt-0.5 flex flex-wrap items-center gap-2">
+              <span className="text-slate-500">Email: {ownerAccount?.email || 'pradeeprout56@gmail.com'}</span>
+              <span>•</span>
+              <span className="text-amber-800 font-semibold">{ownerAccount?.pinEnabled ? 'PIN Protected' : 'PIN Off'}</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          {onOpenOwnerAccount && (
+            <button
+              type="button"
+              onClick={onOpenOwnerAccount}
+              className="h-9 px-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
+            >
+              <Crown className="w-3.5 h-3.5" />
+              Manage Account &amp; Sync
+            </button>
+          )}
+        </div>
+      </div>
+
       <form onSubmit={handleSave} className="space-y-6">
         {/* Section 1: Business Identity */}
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-4">
@@ -128,8 +174,8 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = ({
               onClick={() => {
                 setFormData((prev) => ({
                   ...prev,
-                  name: 'PARESWAR ROUT',
-                  tagline: 'P.H.D Contractor',
+                  name: 'P.H.D CONTRACTOR',
+                  tagline: 'Sanitary & Plumbing Contractor',
                   address: 'At - Kalarahanga, Patia',
                   cityStatePincode: 'Bhubaneswar, Odisha - 751024',
                   phone: '+91 94370 12345',
@@ -139,7 +185,7 @@ export const BusinessSettings: React.FC<BusinessSettingsProps> = ({
               className="text-xs px-2.5 py-1 rounded-lg bg-purple-50 text-purple-800 border border-purple-200 font-semibold hover:bg-purple-100 transition-colors flex items-center gap-1.5"
             >
               <img src="/shiva-logo.svg" alt="Shiva Logo" className="w-4 h-4 object-contain inline" />
-              <span>Load Pareswar Rout Defaults</span>
+              <span>Load P.H.D Contractor Defaults</span>
             </button>
           </div>
 

@@ -10,6 +10,7 @@ import {
   DocumentType,
   FormatTemplate,
   GlossaryItem,
+  OwnerAccount,
   Payment,
   QuotationBillDocument,
 } from './types';
@@ -25,6 +26,7 @@ import { GlossaryManager } from './components/GlossaryManager';
 import { CustomerManager } from './components/CustomerManager';
 import { PaymentModal } from './components/PaymentModal';
 import { BusinessSettings } from './components/BusinessSettings';
+import { OwnerAccountModal } from './components/OwnerAccountModal';
 import { UndoSnackbar } from './components/UndoSnackbar';
 import { useOnlineStatus } from './hooks/useOnlineStatus';
 import { WifiOff } from 'lucide-react';
@@ -34,6 +36,7 @@ export default function App() {
 
   // Core Data States
   const [profile, setProfile] = useState(() => storage.getProfile());
+  const [ownerAccount, setOwnerAccount] = useState(() => storage.getOwnerAccount());
   const [documents, setDocuments] = useState(() => storage.getDocuments());
   const [glossary, setGlossary] = useState(() => storage.getGlossary());
   const [formats, setFormats] = useState(() => storage.getFormats());
@@ -41,6 +44,7 @@ export default function App() {
 
   // Navigation & View States
   const [currentTab, setCurrentTab] = useState<TabType>('home');
+  const [isOwnerModalOpen, setIsOwnerModalOpen] = useState(false);
   const [editingDoc, setEditingDoc] = useState<{
     doc: QuotationBillDocument | null;
     type: DocumentType;
@@ -58,6 +62,7 @@ export default function App() {
   // Refresh all state from storage (used after backup restore)
   const refreshAllState = () => {
     setProfile(storage.getProfile());
+    setOwnerAccount(storage.getOwnerAccount());
     setDocuments(storage.getDocuments());
     setGlossary(storage.getGlossary());
     setFormats(storage.getFormats());
@@ -228,6 +233,8 @@ export default function App() {
         }}
         onNewDocument={handleNewDocument}
         businessName={profile.name}
+        ownerAccount={ownerAccount}
+        onOpenOwnerAccount={() => setIsOwnerModalOpen(true)}
       />
 
       {/* Main View Area */}
@@ -247,6 +254,8 @@ export default function App() {
               <HomeDashboard
                 documents={documents}
                 businessName={profile.name}
+                ownerAccount={ownerAccount}
+                onOpenOwnerAccount={() => setIsOwnerModalOpen(true)}
                 onNewDocument={handleNewDocument}
                 onOpenDocument={(doc) => setPreviewDoc(doc)}
                 onViewAllDocuments={() => setCurrentTab('documents')}
@@ -325,11 +334,13 @@ export default function App() {
             {currentTab === 'settings' && (
               <BusinessSettings
                 profile={profile}
+                ownerAccount={ownerAccount}
                 onSaveProfile={(p) => {
                   storage.saveProfile(p);
                   setProfile(storage.getProfile());
                 }}
                 onDataRestored={refreshAllState}
+                onOpenOwnerAccount={() => setIsOwnerModalOpen(true)}
               />
             )}
           </>
@@ -363,6 +374,19 @@ export default function App() {
           onSavePayment={handleSavePayment}
         />
       )}
+
+      {/* Owner Account & GitHub Repository Manager Modal */}
+      <OwnerAccountModal
+        isOpen={isOwnerModalOpen}
+        onClose={() => setIsOwnerModalOpen(false)}
+        ownerAccount={ownerAccount}
+        businessProfile={profile}
+        onUpdateOwner={(updated) => setOwnerAccount(updated)}
+        onOpenSettings={() => {
+          setIsOwnerModalOpen(false);
+          setCurrentTab('settings');
+        }}
+      />
 
       {/* Undo Snackbar */}
       <UndoSnackbar

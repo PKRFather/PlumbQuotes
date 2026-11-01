@@ -100,6 +100,156 @@ export interface Payment {
   recordedAt: number;
 }
 
+export type LogoType =
+  | 'shiva'
+  | 'tools'
+  | 'pipe_wrench'
+  | 'water_drop'
+  | 'contractor_shield'
+  | 'industrial_valve'
+  | 'custom'
+  | 'none';
+
+export type HeaderAlignment = 'left' | 'center' | 'split' | 'right';
+export type DividerStyle = 'solid' | 'double' | 'dashed' | 'dotted' | 'thick_thin' | 'gradient' | 'none';
+export type LayoutPresentation = 'itemized_table' | 'letterhead_blocks';
+export type TableDensity = 'compact' | 'normal' | 'spacious';
+export type TableBorderStyle = 'full_grid' | 'horizontal_only' | 'clean_minimal' | 'boxed';
+export type DocumentBoxStyle = 'rounded_card' | 'bordered_box' | 'minimal' | 'accent_left';
+export type BankCardStyle = 'card' | 'minimal' | 'table' | 'split' | 'hidden';
+export type UpiQrPosition = 'bottom_right' | 'bottom_left' | 'with_bank' | 'header' | 'hidden';
+export type SignatureAlignment = 'right' | 'center' | 'left' | 'split';
+export type WatermarkType = 'text' | 'logo' | 'none';
+export type FontFamilyOption =
+  | 'serif'
+  | 'playfair'
+  | 'cinzel'
+  | 'merriweather'
+  | 'sans'
+  | 'outfit'
+  | 'jakarta'
+  | 'slab'
+  | 'mono';
+
+export interface HeaderConfig {
+  logoType: LogoType;
+  customLogoUrl?: string;
+  logoSizePx: number; // e.g., 80
+  logoFrame: 'circle' | 'double_ring' | 'rounded' | 'square' | 'none';
+  alignment: HeaderAlignment;
+  topInvocationText?: string; // e.g. "|| ଶ୍ରୀ ଶ୍ରୀ ଧବଳେଶ୍ୱର ପ୍ରସନ୍ନ ||" or "|| ॐ नमः शिवाय ||"
+  showInvocation: boolean;
+  contractorNameFontFamily: FontFamilyOption;
+  contractorNameFontSizePx: number; // e.g., 28
+  contractorNameColor: string; // e.g., "#0f172a"
+  contractorNameUppercase: boolean;
+  contractorLetterSpacing: 'normal' | 'wide' | 'widest';
+  taglineFontSizePx: number; // e.g., 14
+  taglineColor: string; // e.g., "#334155"
+  taglineFontFamily: FontFamilyOption;
+  showTagline: boolean;
+  showAddress: boolean;
+  showPhone: boolean;
+  showAltPhone: boolean;
+  showEmail: boolean;
+  showGstin: boolean;
+  contactRowLayout: 'spaced_between' | 'badges' | 'stacked' | 'compact';
+  contactFontSizePx: number; // e.g., 12
+  contactColor: string; // e.g., "#334155"
+  dividerStyle: DividerStyle;
+  dividerColor: string; // e.g., "#0f172a"
+  dividerThicknessPx: number; // e.g., 2
+  headerBgColor?: string; // e.g., "#ffffff"
+}
+
+export interface StylingConfig {
+  primaryColor: string; // main brand accent (e.g. #702670 or #0284c7)
+  secondaryColor: string;
+  textColor: string;
+  headingColor: string;
+  paperBgColor: string; // #ffffff, #fcfbf9, #f8fafc
+  fontFamily: FontFamilyOption;
+  baseFontSizePx: number; // 12, 13, 14
+  borderRadiusPx: number;
+}
+
+export interface MetadataBlockConfig {
+  layout: 'badge_box' | 'banner_strip' | 'classic_inline' | 'modern_card';
+  quotationTitle: string; // "QUOTATION" or "ESTIMATE"
+  billTitle: string; // "TAX INVOICE" or "BILL"
+  showNumber: boolean;
+  showDate: boolean;
+  showDueDate: boolean;
+  titleColor: string;
+  badgeBgColor: string;
+}
+
+export interface CustomerBlockConfig {
+  style: DocumentBoxStyle;
+  billToLabel: string; // "BILL TO:" or "CLIENT:"
+  siteLabel: string; // "SITE / WORK ADDRESS:"
+  bgColor: string;
+  borderColor: string;
+  showSiteAddress: boolean;
+  showCustomerPhone: boolean;
+  showCustomerEmail: boolean;
+}
+
+export interface TableConfig {
+  presentation: LayoutPresentation;
+  density: TableDensity;
+  borderStyle: TableBorderStyle;
+  borderColor: string;
+  headerBgColor: string;
+  headerTextColor: string;
+  alternatingRowBg: boolean;
+  stripeColor: string;
+  fontSizePx: number;
+  snoLabel: string;
+  descriptionLabel: string;
+  sizeSpecLabel: string;
+  quantityLabel: string;
+  unitLabel: string;
+  rateLabel: string;
+  taxLabel: string;
+  amountLabel: string;
+}
+
+export interface TotalsConfig {
+  highlightColor: string;
+  showTaxBreakdown: boolean;
+  showDiscountLine: boolean;
+  showAdvancePaid: boolean;
+  showBalanceDue: boolean;
+  amountInWordsStyle: 'banner' | 'pill' | 'italic_note' | 'none';
+  amountInWordsLabel: string;
+}
+
+export interface FooterConfig {
+  bankStyle: BankCardStyle;
+  bankTitle: string;
+  upiPosition: UpiQrPosition;
+  upiTitle: string;
+  qrSizePx: number;
+  termsStyle: 'boxed' | 'numbered' | 'bullets' | 'compact';
+  termsTitle: string;
+  termsText?: string;
+  signatureTitle: string;
+  signatureSubtext?: string;
+  signatureAlign: SignatureAlignment;
+  showSignatureLine: boolean;
+  customFooterNote: string;
+}
+
+export interface WatermarkConfig {
+  enabled: boolean;
+  type: WatermarkType;
+  text: string;
+  opacityPercent: number; // 3 to 25
+  rotationDeg: number; // -45 to 45
+  fontSizePx: number;
+}
+
 export interface FormatTemplate {
   id: string;
   name: string;
@@ -129,6 +279,16 @@ export interface FormatTemplate {
   showTerms: boolean;
   showSignature: boolean;
   showBankDetails: boolean;
+
+  // Complete Granular Letterhead Configuration
+  header?: HeaderConfig;
+  styling?: StylingConfig;
+  metadataBlock?: MetadataBlockConfig;
+  customerBlock?: CustomerBlockConfig;
+  table?: TableConfig;
+  totals?: TotalsConfig;
+  footer?: FooterConfig;
+  watermark?: WatermarkConfig;
 }
 
 export interface BusinessProfile {
@@ -197,3 +357,21 @@ export interface DocumentCalculations {
   balanceDuePaise: number;
   amountInWords: string;
 }
+
+export interface OwnerAccount {
+  username: string; // e.g. "contractor"
+  fullName: string; // e.g. "P.H.D Contractor"
+  email: string;
+  designation: string;
+  phone: string;
+  githubRepoUrl: string;
+  githubRepoName: string;
+  role: 'owner' | 'staff'; // active role session
+  pinEnabled: boolean;
+  pinCode?: string; // 4-digit security PIN
+  githubToken?: string; // optional GitHub Personal Access Token for sync
+  lastSyncedAt?: number;
+  isOrphanClaimed: boolean; // ownership claimed & active
+  claimedAt: number;
+}
+
